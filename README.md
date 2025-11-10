@@ -8,10 +8,10 @@ cd financial-content-maker
 docker compose up -d --build
 
 # instalar dependências PHP (dentro do serviço app)
-docker compose exec backend-laravel composer install
+docker compose exec app composer install
 
 # rodar migrations e seeders
-docker compose exec backend-laravel php artisan migrate 
+docker compose exec app php artisan migrate 
 ```
 
 # Endpoints
