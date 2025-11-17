@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enum\AuditoriaAcaoEnum;
+use App\Http\Requests\GeracaoRequest;
 use App\Models\Conteudo;
 use App\Models\AuditoriaConteudo;
 use App\Http\Requests\ConteudoRequest;
@@ -28,6 +29,8 @@ class ConteudoController extends Controller
             $query->where('topico', $request->input('topico'));
         }
 
+        $query->orderBy('created_at', 'desc');
+
         $perPage = (int) $request->input('per_page', 10);
         $conteudos = $query->paginate($perPage);
 
@@ -35,18 +38,19 @@ class ConteudoController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Start the content generation process.
      */
-    public function store(ConteudoRequest $request): JsonResponse
+    public function gerar(GeracaoRequest $request): JsonResponse
     {
-        $conteudo = Conteudo::create($request->validated());
+        $topic = $request->validated('topic');
+        $userId = Auth::id();
 
-        AuditoriaConteudo::create([
-            'conteudo_id' => $conteudo->id,
-            'acao' => AuditoriaAcaoEnum::CRIAR,
-        ]);
+        GerarConteudoIA::dispatch($topic);
 
-        return response()->json($conteudo, 201);
+        return response()->json(
+            ['message' => 'Geração de conteúdo iniciada. O conteúdo será criado assim que estiver pronto.'],
+            202
+        );
     }
 
     /**
@@ -107,11 +111,20 @@ class ConteudoController extends Controller
         $data = $request->validated();
 
         try {
-            if (isset($data['conteudo'])) {
+
+            if ($conteudo->status === \App\Enum\ConteudoStatusEnum::REPROVADO) {
                 $conteudo->statusEscritoAposEditarConteudoReprovado();
             }
 
             $conteudo->update($data);
+
+            AuditoriaConteudo::create([
+                'conteudo_id' => $conteudo->id,
+                'user_id' => Auth::id(),
+                'acao' => AuditoriaAcaoEnum::EDITAR,
+                'detalhes' => 'Conteúdo editado pelo revisor.'
+            ]);
+
         } catch (Throwable $e) {
             return response()->json(['error' => $e->getMessage()], 422);
         }
