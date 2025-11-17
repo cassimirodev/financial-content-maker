@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-class Controller extends BaseController
+abstract class Controller
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    //
 }
