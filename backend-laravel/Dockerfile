@@ -35,4 +35,6 @@ RUN docker-php-ext-install \
   curl \
   zip
 
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+
 ENTRYPOINT ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
