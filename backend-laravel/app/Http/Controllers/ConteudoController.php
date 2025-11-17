@@ -11,6 +11,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Enum\ConteudoStatusEnum;
 use Throwable;
+use Illuminate\Support\Facades\Auth;
+use App\Jobs\GerarConteudoIA;
 
 class ConteudoController extends Controller
 {
