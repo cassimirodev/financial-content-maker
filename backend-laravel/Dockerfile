@@ -35,19 +35,4 @@ RUN docker-php-ext-install \
   curl \
   zip
 
-COPY --from=composer:2.5.5 /usr/bin/composer /usr/bin/composer
-
-RUN openssl req -subj '/CN=localhost' -x509 -newkey rsa:4096 -nodes -keyout /etc/nginx/conf.d/key.pem -out /etc/nginx/conf.d/cert.pem -days 365
-
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
-COPY ./DockerConfig/nginx/default.conf /etc/nginx/sites-enabled/default
-COPY ./DockerConfig/entrypoint.sh /etc/entrypoint.sh
-
-RUN sed -i 's/access.log = \/proc\/self\/fd\/2/access.log = \/dev\/null/g' /usr/local/etc/php-fpm.d/docker.conf
-
-EXPOSE 80
-
-RUN chmod +x /etc/entrypoint.sh
-
-ENTRYPOINT ["/etc/entrypoint.sh"]
+ENTRYPOINT ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
