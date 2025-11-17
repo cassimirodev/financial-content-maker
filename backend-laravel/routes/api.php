@@ -6,13 +6,23 @@ use App\Http\Controllers\TokenController;
 use App\Http\Controllers\ConteudoController;
 
 
-//Crud basico
-Route::get("/conteudos", [ConteudoController::class,"index"])->name("Listar conteúdos");
-Route::post("/conteudos", [ConteudoController::class,"store"])->name("Gerar conteúdo");
-Route::get("/conteudos/{id}", [ConteudoController::class,"show"])->name("Listar apenas um conteúdo");
-Route::put("/conteudos/{conteudo}", [ConteudoController::class,"update"])->name("Atualiza apenas um conteúdo");
-Route::delete("/conteudos/{conteudo}", [ConteudoController::class,"destroy"])->name("Deleta um conteúdo");
+Route::post('/conteudos/gerar', [ConteudoController::class, 'gerar'])
+    ->name('conteudos.gerar');
 
-// rota para aprovar e reprovar
-Route::post("/conteudos/{conteudo}/aprovar", [ConteudoController::class,"aprovar"])->name("Aprovar conteúdo");
-Route::post("/conteudos/{conteudo}/reprovar", [ConteudoController::class,"reprovar"])->name("Reprovar conteúdo");
+Route::get('/conteudos', [ConteudoController::class, 'index'])
+    ->name('conteudos.index');
+
+Route::get('/conteudos/{conteudo}', [ConteudoController::class, 'show'])
+    ->name('conteudos.show');
+
+Route::put('/conteudos/{conteudo}', [ConteudoController::class, 'update'])
+    ->name('conteudos.update');
+
+Route::delete('/conteudos/{conteudo}', [ConteudoController::class, 'destroy'])
+    ->name('conteudos.destroy');
+
+Route::post('/conteudos/{conteudo}/aprovar', [ConteudoController::class, 'aprovar'])
+    ->name('conteudos.aprovar');
+
+Route::post('/conteudos/{conteudo}/reprovar', [ConteudoController::class, 'reprovar'])
+    ->name('conteudos.reprovar');
