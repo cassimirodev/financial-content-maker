@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Conteudo extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     /**
      * Columns that can be mass assigned.
