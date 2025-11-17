@@ -23,7 +23,7 @@ class GeracaoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'topic' => ['required', 'string', 'min:3', 'max:255']
+            'topico' => ['required', 'string', 'min:3', 'max:255']
         ];
     }
 }
