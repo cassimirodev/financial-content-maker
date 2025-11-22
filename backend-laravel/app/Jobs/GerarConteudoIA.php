@@ -69,7 +69,7 @@ class GerarConteudoIA implements ShouldQueue
 
             AuditoriaConteudo::create([
                 'conteudo_id' => $conteudo->id,
-                'user_id' => $this->userId,
+                'user_id' => Auth::id(),
                 'acao' => AuditoriaAcaoEnum::CRIAR,
                 'detalhes' => 'Conteúdo criado automaticamente pelo sistema de IA.'
             ]);
