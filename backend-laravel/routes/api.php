@@ -10,7 +10,7 @@ use App\Http\Controllers\ConteudoController;
  *
  */
 Route::post('/login', [TokenController::class, 'issue'])
-    ->name('token.issue');
+    ->name('login');
 Route::post('/register', [UserController::class, 'store'])
     ->name('user.store');
 
