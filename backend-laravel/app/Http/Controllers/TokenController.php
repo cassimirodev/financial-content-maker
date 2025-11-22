@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class TokenController extends Controller
 {
     /**
      * Creates a new token for the user.
+     * @throws ValidationException
      */
     public function issue(LoginRequest $request ): JsonResponse
     {
@@ -37,6 +41,6 @@ class TokenController extends Controller
 
         $request->user()->currentAccessToken()->delete();
 
-        return response()->json(['message' => 'Logout realizado com sucesso (Token revogado).'], 200);
+        return response()->json(['message' => 'Logout realizado com sucesso'], 200);
     }
 }
