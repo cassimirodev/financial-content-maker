@@ -12,7 +12,7 @@ class GeracaoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return $this->authorize();
     }
 
     /**
