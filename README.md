@@ -48,9 +48,9 @@ docker exec -it backend-laravel bash
 
 ## Endpoints
 - Serviço de agentes:
-  - Health: http://localhost:8001/helthz
   - Docs: http://localhost:8001/docs
-- Laravel (front / app): https://localhost/
+- Laravel:
+  - Docs: http://localhost:8080/docs/api#/
 
 Ajuste de porta/host pode ser necessário dependendo do `docker-compose.yml`.
 
