@@ -1,0 +1,24 @@
+{
+  "name": "Financial Content Maker Environment",
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "version": "latest",
+      "enableNonRootDocker": "true",
+      "moby": "true"
+    },
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "mikestead.dotenv",
+        "amiralizadeh9480.laravel-extra-intellisense",
+        "bmewburn.vscode-intelephense-client",
+        "donjayamanne.githistory"
+      ]
+    }
+  },
+  "postCreateCommand": "docker compose up -d --build",
+  "remoteUser": "codespace"
+}
