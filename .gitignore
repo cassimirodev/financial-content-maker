@@ -29,10 +29,6 @@ backend-laravel/public/hot
 
 
 backend-laravel/*.log
-backend-laravel/storage/
-backend-laravel/public/storage
-backend-laravel/storage/*.key
-backend-laravel/storage/pail
 backend-laravel/.phpunit.result.cache
 backend-laravel/Homestead.json
 backend-laravel/Homestead.yaml
