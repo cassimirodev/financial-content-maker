@@ -1,36 +1,32 @@
-/**
- * Salvar token no localStorage
- */
+
+ //Salvar token 
 function salvarToken(token) {
   localStorage.setItem("authToken", token);
   console.log("Token salvo com sucesso");
 }
 
-/**
- * Obter token do localStorage
- */
+
+ //Obter token
 function obterToken() {
   return localStorage.getItem("authToken");
 }
 
-/**
- * Remover token do localStorage (logout)
- */
+
+
+//Remover token(logout)
 function removerToken() {
   localStorage.removeItem("authToken");
   console.log("Token removido");
 }
 
-/**
- * Verificar se o usuário está autenticado
- */
+
+ //Verificar se o usuário está autenticado
 function estaAutenticado() {
   return obterToken() !== null;
 }
 
-/**
- * Obter headers com autenticação
- */
+
+ //Obter headers com autenticação
 function obterHeadersComAuth() {
   const token = obterToken();
   return {
@@ -40,9 +36,8 @@ function obterHeadersComAuth() {
   };
 }
 
-/**
- * Fazer logout
- */
+
+ //Fazer logout
 async function fazerLogout() {
   const baseUrl = window.location.origin;
   const token = obterToken();
@@ -67,14 +62,12 @@ async function fazerLogout() {
     }
   } catch (error) {
     console.error("Erro na requisição de logout:", error);
-    // Mesmo com erro, remove o token localmente
     removerToken();
   }
 }
  
-/**
- * Salvar informações do usuário no localStorage
- */
+
+ //Salvar informações do usuário
 function salvarUsuario(user) {
   try {
     localStorage.setItem("authUser", JSON.stringify(user));
@@ -84,9 +77,8 @@ function salvarUsuario(user) {
   }
 }
 
-/**
- * Obter usuário salvo
- */
+
+ //Obter usuário salvo
 function obterUsuario() {
   try {
     const raw = localStorage.getItem("authUser");
@@ -97,9 +89,8 @@ function obterUsuario() {
   }
 }
 
-/**
- * Remover usuário do localStorage
- */
+
+//Remover usuário
 function removerUsuario() {
   localStorage.removeItem("authUser");
 }
