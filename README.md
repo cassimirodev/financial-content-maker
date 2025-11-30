@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="backend-laravel/public/frontend/img/jcpe_logo.png" alt="Logo JCPE" width="250"/>
+  <img src="backend-laravel/public/frontend/img/jcpe_logo-gh.png" alt="Logo JCPE" width="250"/>
   
   # Financial Content Maker
   **Automação de Jornalismo Financeiro com Agentes de IA**
