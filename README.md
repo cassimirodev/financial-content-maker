@@ -1,114 +1,147 @@
-# financial-content-maker
+<div align="center">
+  <img src="backend-laravel/public/frontend/img/jcpe_logo.png" alt="Logo JCPE" width="250"/>
+  
+  # Financial Content Maker
+  **Automação de Jornalismo Financeiro com Agentes de IA**
+    
 
-Serviço de geração de conteúdo financeiro.
+  <p align="center">
+    Uma plataforma que utiliza Agentes de IA para coletar dados do mercado financeiro em tempo real e redigir notícias jornalísticas completas, seguindo o molde editorial do Jornal do Commercio.
+  </p>
 
-## Requisitos
-- Docker
-- Docker Compose
-- Git
+   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original-wordmark.svg" width=40/>
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-png/1.74.0/files/dark/crewai-color.png" width=40/>
+   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg" width=40 />
+   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg"width=40 />
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg" width=40 />
+     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" width=40 />
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" width=40 />  
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" width=40 />
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" width=40 />
+          
+          
 
-## Primeiros passos
-1. Clonar o repositório e entrar na pasta:
+</div>
+
+---
+
+# Sobre o Projeto
+
+Este projeto segue a proposta sugerida: Criar um grupo de agentes de inteligência artificial para analisar ações e gerar conteúdos recomendando (ou não) a compra, com base em dados reais e percepção de mercado.
+
+    Júlia: coleta os dados financeiros atualizados via Yahoo Finance.
+    Pedro: analisa o que o mercado e a mídia estão dizendo sobre a empresa.
+    Key: jornalista experiente que redige o conteúdo final, com base nos dados dos outros dois.
+    Fator humano: revisa e aprova o conteúdo antes da publicação.
+
+O objetivo é produzir matérias financeiras claras, confiáveis e baseadas em dados, com apoio de IA e curadoria humana.
+
+
+
+# Arquitetura do Sistema
+
+O sistema é composto por 3 containers principais orquestrados via Docker Compose:
+
+| Serviço | Tecnologia | Responsabilidade |
+| :--- | :--- | :--- |
+| **Backend API** | Laravel e PHP| Gestão de usuários, CRUD de conteúdos, Autenticacão e disparo de Jobs. |
+| **Worker** | Laravel Queue | Processamento em segundo plano. Consome a fila, executa as tasks chamando o Serviço de agentes. |
+| **Agente IA** | Python (CrewAI) | Coleta dados, analisa sentimento e escreve o texto. |
+| **Banco de Dados** | MySQL 5.7 | Persistência de dados |
+
+---
+
+#  Como Rodar
+
+- Clone o repositório:
 ```bash
 git clone git@github.com:cassimirodev/financial-content-maker.git
 cd financial-content-maker
 ```
 
-2. Subir containers (build):
+- Crie os `.env` em '/analyzer_agents' e '/backend-laravel' seguindo `.env.example`
+
+- Subir containers:
 ```bash
 docker compose up -d --build
 ```
 
-3. Rodar comandos dentro do container do Laravel (prefira `docker exec <nome_container> <comando>`):
+Obs: se estiver no codespaces, rode `docker login` antes. 
+
+- Instale as dependências
 ```bash
-docker exec backend-laravel composer install
-docker exec backend-laravel cp .env.example .env
+docker exec backend-laravel composer install 
+```
+
+- Gere a encryption key para seu projeto
+```bash
 docker exec backend-laravel php artisan key:generate
-docker exec backend-laravel php artisan migrate --seed
-```
-Observação: use `docker ps` para ver os nomes dos containers.
-
-## Comandos úteis
-- Ver logs:
-```bash
-docker compose logs -f
-```
-- Executar testes:
-```bash
-docker exec backend-laravel php artisan test
-```
-- Recriar serviço específico:
-```bash
-docker compose up -d --build <servico>
-```
-- Entrar no shell interativo do container:
-```bash
-docker exec -it backend-laravel bash
 ```
 
-## Endpoints
-- Serviço de agentes:
-  - Docs: http://localhost:8001/docs
-- Laravel:
-  - Docs: http://localhost:8080/docs/api#/
-
-Ajuste de porta/host pode ser necessário dependendo do `docker-compose.yml`.
-
-## Variáveis de ambiente
-- Copie `.env.example` para `.env` (no container ou local, conforme sua configuração de volume).
-- Verifique credenciais de banco e outros serviços em `.env`.
-- Gere a APP_KEY com `php artisan key:generate` dentro do container.
-
-## Banco de dados
-- Executar migrations e seeders:
+- Rode as migrações para gerar o schema do banco
 ```bash
 docker exec backend-laravel php artisan migrate --seed
 ```
-- Resetar banco:
-```bash
-docker exec backend-laravel php artisan migrate:fresh --seed
+
+# Acessar o projeto
+
+
+Para acessar a interface visual: 
+
+```bash 
+ # CODESPACES: Mude a porta para public, abra a URL e coloque /frontend/index.html no fim da url.
+
+ # Localhost: acesse a porta 8080 no localhost e /frontend/index.html no fim da url.
 ```
-Observação: CUIDADO! ao adicionar `:fresh` no comando de migrate, resetará todo seu schema do banco, resultando na perca dos dados persistidos.
-
-## Fluxo de desenvolvimento
-- Recomenda-se criar uma branch de desenvolvimento (`dev`) e abrir PRs para a branch principal (main).
-- Utilizar commits semânticos com o objetivo de melhorar o entendimento do que foi feito.
-
 
 ## Estrutura do repositório
 Abaixo a estrutura principal do projeto:
 
 ```
-.
+├── README.md
 ├── analyzer_agents
-│   ├── Dockerfile
-│   ├── pyproject.toml
-│   ├── src
-│   └── tests
+│   ├── Dockerfile
+│   ├── pyproject.toml
+│   ├── src
+│   └── tests
 ├── backend-laravel
-│   ├── app
-│   ├── artisan
-│   ├── bootstrap
-│   ├── composer.json
-│   ├── composer.lock
-│   ├── config
-│   ├── database
-│   ├── Dockerfile
-│   ├── package.json
-│   ├── phpunit.xml
-│   ├── public
-│   ├── README.md
-│   ├── resources
-│   ├── routes
-│   ├── storage
-│   ├── tests
-│   ├── vendor
-│   └── vite.config.js
+│   ├── Dockerfile
+│   ├── README.md
+│   ├── app
+│   ├── artisan
+│   ├── bootstrap
+│   ├── composer.json
+│   ├── composer.lock
+│   ├── config
+│   ├── database
+│   ├── docker
+│   ├── package.json
+│   ├── phpunit.xml
+│   ├── public
+│   ├── resources
+│   ├── routes
+│   ├── storage
+│   ├── tests
+│   ├── vendor
+│   └── vite.config.js
 ├── docker-compose.yaml
-└── README.md
+└── package-lock.json
 ```
 
-## Troubleshooting rápido
-- Container não sobe: verifique `docker compose logs <servico>` e ajuste volumes/permissões.
-- Comandos artisan não encontrados: confirme o nome do container com `docker ps` e execute `docker exec <container> php artisan`.
-- Porta ocupada: ajuste portas no `docker-compose.yml` ou pare o serviço que estiver usando a porta.
+# Equipe 2 - Residência
+
+Integrantes da equipe:
+- [Eduardo](https://github.com/cassimirodev) 
+- [Gabrielly](https://github.com/Ghabrielly)
+- [Ana Paula](https://github.com/paulalemos-bt)
+- [Ihcaro](https://github.com/Ihcarog)
+
+
+
+
+
+
+
+
+
+
