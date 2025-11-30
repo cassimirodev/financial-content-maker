@@ -1,11 +1,22 @@
 task_julia_collect:
-  description: "Colete os dados financeiros chaves (preço atual, variação, P/L, etc.) sobre {topic} e resuma em tópicos."
-  expected_output: 'Um resumo de tópicos com os dados financeiros mais relevantes e atualizados sobre {topic}.'
+  description: "Busque o ticker {topic}. Retorne APENAS: Preço Atual, Variação do dia/semana, P/L (P/E Ratio) e Capitalização de Mercado. Nada de texto corrido, apenas dados."
+  expected_output: 'Lista técnica com os 4 indicadores financeiros principais de {topic}.'
 
 task_pedro_analyze:
-  description: "Usando o resultado da coleta de dados de Júlia, pesquise o sentimento da mídia sobre {topic} e identifique as cinco notícias mais influentes."
-  expected_output: 'Um resumo analítico de duas partes: 1) Sentimento do mercado, 2) Resumo das notícias-chave sobre {topic}'
+  description: "Com base nos dados de Julia, busque 3 notícias recentes sobre {topic}. Resuma cada uma em uma frase explicando se é positiva (Bullish) ou negativa (Bearish)."
+  expected_output: 'Resumo curto das 3 principais causas da movimentação do ativo {topic}.'
 
 task_key_draft:
-  description: "Usando o resumo de dados de Júlia e a análise de mercado de Pedro, escreva uma matéria financeira completa e confiável sobre {topic}."
-  expected_output: 'A matéria sobre {topic} final e completa, pronta para ser revisada pelo Fator Humano.'
+  description: >
+    Escreva uma matéria jornalística sobre {topic} se baseando no modelo do portal do Jornal do Commercio (JC).
+    
+    Siga ESTRITAMENTE esta estrutura visual padrão do JC:
+    1. Título Impactante (Verbo no presente, foco na ação principal, estilo manchete).
+    2. Linha Fina (Resumo de 2 linhas logo abaixo do título, complementando a informação).
+    3. Lide (1º Parágrafo): Responda O Que, Quem, Quando, Onde, Como e Porquê, citando o preço atual.
+    4. Corpo da Matéria: Divida em seções com SUBTÍTULOS em negrito para facilitar a leitura.
+    5. Conteúdo: Integre os dados da Julia com a análise de contexto do Pedro.
+    6. Encerramento: Uma projeção para o investidor ou contexto do setor.
+    
+    Tom de voz: Jornalístico, formal, terceira pessoa e objetivo.
+  expected_output: 'Artigo jornalístico em Markdown, formatado com Título, Linha Fina e Intertítulos, pronto para o CMS do JC.'
